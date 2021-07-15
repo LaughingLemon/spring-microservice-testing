@@ -15,13 +15,19 @@ public class ARestController {
     @Value("${org.lemon.server.url}")
     private String url;
 
+    @GetMapping("")
+    public String defaultResponse() {
+        return "default";
+    }
+
     @GetMapping("find")
     public String findBook(@RequestParam String author) {
         log.info("author: " + author);
 
         RestTemplate restClient = new RestTemplate();
-        String retBook = restClient.exchange(url, HttpMethod.GET, null, String.class).getBody();
-        return retBook;
+        return restClient
+                .exchange(url, HttpMethod.GET, null, String.class)
+                .getBody();
     }
 
 }
